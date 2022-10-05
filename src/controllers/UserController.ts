@@ -15,6 +15,9 @@ export class UserController {
     }
 }
 
+/**
+ *  FS functions
+ */
 const dbPath = 'db.json';
 
 function getUserSync(): User[] {
@@ -23,7 +26,6 @@ function getUserSync(): User[] {
     }
 
     const data = fs.readFileSync(dbPath);
-
     const userJSON = JSON.parse(data.toString()) as any[];
 
     return userJSON.map((user) =>
