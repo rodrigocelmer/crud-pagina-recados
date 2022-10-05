@@ -16,12 +16,18 @@ export class User {
     public get messages() : Message[] {
         return [...this._messages];
     }
-    
-    
+        
     constructor(name: string){
         this._id = crypto.randomUUID();
         this._name = name;
         this._messages = [];
+    }
+
+    static fill(id: string, name: string): User{
+        const user = new User(name);
+        user._id = id;
+
+        return user;
     }
 
     toJson(){
