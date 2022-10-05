@@ -9,5 +9,9 @@ export default (app: Express) => {
         '/users',
         new UserMiddleware().validateUserBody,
         new UserController().create
-    )
+    );
+    app.get(
+        '/users',
+        new UserController().getAll
+    );
 }
