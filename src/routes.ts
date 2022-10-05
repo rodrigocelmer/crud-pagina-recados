@@ -14,4 +14,9 @@ export default (app: Express) => {
         '/users',
         new UserController().getAll
     );
+    app.delete(
+        '/users/:userId',
+        new UserMiddleware().validateUserId,
+        new UserController().remove
+    );
 }

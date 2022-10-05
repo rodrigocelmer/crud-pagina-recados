@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../model/User";
-import fs from "fs";
+import { getUserSync, saveUserSync } from "../util/UserFileSystem";
 
 export class UserController {
     create(request: Request, response: Response){
@@ -29,33 +29,15 @@ export class UserController {
 
         return response.json(allUsersFound);
     }
-}
 
-/**
- *  FS functions
- */
-const dbPath = 'db.json';
+    remove(request: Request, response: Response){
+        const {userId} = request.params;
+        const usersDB = getUserSync();
+        const userIndex = usersDB.findIndex(u => u.id === userId);
 
-function getUserSync(): User[] {
-    if(!fs.existsSync(dbPath)){
-        return [];
+        usersDB.splice(userIndex, 1);
+        saveUserSync(usersDB);
+
+        return response.json({msg: 'user deleted'});
     }
-
-    const data = fs.readFileSync(dbPath);
-    const userJSON = JSON.parse(data.toString()) as any[];
-
-    return userJSON.map((user) =>
-        User.fill(
-            user.id,
-            user.name
-        )
-    );
-}
-
-function saveUserSync(users: User[]): void {
-    const dataJSON = JSON.stringify(
-        users.map((user) => user.toJson())
-    )
-
-    fs.writeFileSync(dbPath, dataJSON);
 }
