@@ -7,7 +7,7 @@ export default (app: Express) => {
 
     app.post(
         '/users',
-        new UserMiddleware().validateUserBody,
+        new UserMiddleware().validateBody,
         new UserController().create
     );
     app.get(

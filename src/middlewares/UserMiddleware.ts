@@ -13,7 +13,7 @@ export class UserMiddleware {
         return next();
     }
 
-    validateUserBody(request: Request, response: Response, next: NextFunction){
+    validateBody(request: Request, response: Response, next: NextFunction){
         const {name} = request.body;
 
         if(!name)
