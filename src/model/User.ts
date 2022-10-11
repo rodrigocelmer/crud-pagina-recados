@@ -40,4 +40,12 @@ export class User {
             name: this._name
         }
     }
+
+    toFileSystem(){
+        return{
+            id: this._id,
+            name: this._name,
+            messages: this._messages
+        }
+    }
 }

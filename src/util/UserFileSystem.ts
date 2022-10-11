@@ -21,8 +21,8 @@ import fs from "fs";
  
  export function saveUserSync(users: User[]): void {
      const dataJSON = JSON.stringify(
-         users.map((user) => user.toJson())
+         users.map((user) => user.toFileSystem())
      )
- 
+
      fs.writeFileSync(dbPath, dataJSON);
  }
