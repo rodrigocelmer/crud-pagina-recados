@@ -30,6 +30,10 @@ export class User {
         return user;
     }
 
+    addMessage(message: Message){
+        this._messages.push(message);
+    }
+
     toJson(){
         return{
             id: this._id,
