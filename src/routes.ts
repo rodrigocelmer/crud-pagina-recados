@@ -26,5 +26,9 @@ export default (app: Express) => {
         new UserMiddleware().validateUserId,
         new MessageMiddleware().validateBody,
         new MessageController().create
+    );
+    app.get(
+        '/users/:userId/messages',
+        new MessageController().getAll
     )
 }
