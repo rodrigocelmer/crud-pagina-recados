@@ -22,13 +22,19 @@ export class MessageController {
         const usersDB = getUserSync();
         const user = usersDB.find(u => u.id === userId) as User;
         const {description, detail} = request.query;
-        let allMessagesFound = user.messages.map(messages => {
-            return messages.toJson();
+        let allMessagesFound = user.messages.map(message => {
+            return message;
         })
 
-        // if(name){
-        //     allUsersFound = allUsersFound.filter(user => {
-        //         return user.name.toLowerCase().includes(name.toString().toLowerCase());
+        // if(description){
+        //     allMessagesFound = allMessagesFound.filter(message => {
+        //         return message.description.toLowerCase().includes(description.toString().toLowerCase());
+        //     })
+        // }
+
+        // if(detail){
+        //     allMessagesFound = allMessagesFound.filter(message => {
+        //         return message.detail.toLowerCase().includes(detail.toString().toLowerCase());
         //     })
         // }
 
