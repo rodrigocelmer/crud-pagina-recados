@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { getUserSync, saveUserSync } from "../util/UserFileSystem";
 
 export class UserMiddleware {
-    validateUserId(request: Request, response: Response, next: NextFunction){
+    validateId(request: Request, response: Response, next: NextFunction){
         const {userId} = request.params;
         const usersDB = getUserSync();
         const user = usersDB.find(u => u.id === userId);

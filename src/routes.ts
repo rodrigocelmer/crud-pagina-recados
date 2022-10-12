@@ -18,12 +18,12 @@ export default (app: Express) => {
     );
     app.delete(
         '/users/:userId',
-        new UserMiddleware().validateUserId,
+        new UserMiddleware().validateId,
         new UserController().remove
     );
     app.post(
         '/users/:userId/messages',
-        new UserMiddleware().validateUserId,
+        new UserMiddleware().validateId,
         new MessageMiddleware().validateBody,
         new MessageController().create
     );
