@@ -23,9 +23,10 @@ export class User {
         this._messages = [];
     }
 
-    static fill(id: string, name: string): User{
+    static fill(id: string, name: string, messages: Message[]): User{
         const user = new User(name);
         user._id = id;
+        user._messages = messages
 
         return user;
     }

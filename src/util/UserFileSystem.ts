@@ -14,7 +14,8 @@ import fs from "fs";
      return userJSON.map((user) =>
          User.fill(
              user.id,
-             user.name
+             user.name,
+             user.messages
          )
      );
  }
