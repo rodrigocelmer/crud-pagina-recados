@@ -30,5 +30,11 @@ export default (app: Express) => {
     app.get(
         '/users/:userId/messages',
         new MessageController().getAll
-    )
+    );
+    app.delete(
+        '/users/:userId/messages/:msgId',
+        new UserMiddleware().validateId,
+        new MessageMiddleware().validateId,
+        new MessageController().remove
+    );
 }

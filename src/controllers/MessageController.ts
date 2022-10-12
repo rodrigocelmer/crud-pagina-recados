@@ -34,4 +34,16 @@ export class MessageController {
 
         return response.json(allMessagesFound);
     }
+
+    remove(request: Request, response: Response){
+        const {userId, msgId} = request.params;
+        const usersDB = getUserSync();
+        const user = usersDB.find(u => u.id === userId) as User;
+        const usgMsgIndex = user.messages.findIndex(m => m.id === msgId)
+
+        usersDB.splice(usgMsgIndex, 1);
+        saveUserSync(usersDB);
+
+        return response.json({msg: 'message deleted'});
+    }
 }
