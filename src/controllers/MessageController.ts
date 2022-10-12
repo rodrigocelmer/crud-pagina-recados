@@ -22,8 +22,8 @@ export class MessageController {
         const usersDB = getUserSync();
         const user = usersDB.find(u => u.id === userId) as User;
         const {description, detail} = request.query;
-        let allMessagesFound = user.messages.map(user => {
-            return user.toJson();
+        let allMessagesFound = user.messages.map(messages => {
+            return messages.toJson();
         })
 
         // if(name){
