@@ -7,9 +7,9 @@ export class MessageMiddleware {
         const {userId, msgId} = request.params;
         const usersDB = getUserSync();
         const user = usersDB.find(u => u.id === userId) as User;
-        const usgMsg = user.messages.find(m => m.id === msgId)
+        const userMsg = user.messages.find(m => m.id === msgId)
 
-        if(!usgMsg)
+        if(!userMsg)
             return response.status(404).json({err: 'message not found'});
         
         return next();
