@@ -28,7 +28,6 @@ export class User {
         user._id = id;
         user._messages = messages.map(msg => Message.fill(msg))
 
-
         return user;
     }
 
