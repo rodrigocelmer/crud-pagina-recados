@@ -23,8 +23,8 @@ export class Message{
     }
     
     static fill(message: Message): Message{
-        const msg = new Message(message._description, message._detail);
-        msg._id = message._id;
+        const msg = new Message(message.description, message.detail);
+        msg._id = message.id;
 
         return msg;
     }

@@ -50,7 +50,15 @@ export class User {
         return{
             id: this._id,
             name: this._name,
-            messages: this._messages
+            messages: this._messages.map(msg => {
+                return(
+                    {
+                        id: msg.id,
+                        description: msg.description,
+                        detail: msg.detail
+                    }
+                )
+            })
         }
     }
 }
