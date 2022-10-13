@@ -22,6 +22,17 @@ export class Message{
         this._detail = detail
     }
     
+    static fill(message: Message): Message{
+        console.log(message);
+        
+        const msg = new Message(message._description, message._detail);
+        console.log(msg);
+        
+        msg._id = message._id;
+
+        return msg;
+    }
+
     toJson(){
         return {
             id: this._id,
