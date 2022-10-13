@@ -47,7 +47,7 @@ export class MessageController {
         const user = usersDB.find(u => u.id === userId) as User;
         const userMsgIndex = user.messages.findIndex(m => m.id === msgId);
 
-        usersDB.splice(userMsgIndex, 1);
+        user.deleteMessage(userMsgIndex);
         saveUserSync(usersDB);
 
         return response.json({msg: 'message deleted'});

@@ -35,6 +35,10 @@ export class User {
         this._messages.push(message);
     }
 
+    deleteMessage(index: number){
+        this._messages.splice(index, 1);
+    }
+
     toJson(){
         return{
             id: this._id,
