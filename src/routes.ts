@@ -38,4 +38,11 @@ export default (app: Express) => {
         new MessageMiddleware().validateId,
         new MessageController().remove
     );
+    app.put(
+        '/users/:userId/messages/:msgId',
+        new UserMiddleware().validateId,
+        new MessageMiddleware().validateId,
+        new MessageMiddleware().validateBody,
+        new MessageController().update
+    )
 }

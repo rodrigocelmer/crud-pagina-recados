@@ -29,6 +29,11 @@ export class Message{
         return msg;
     }
 
+    edit(message: Message){
+        this._description = message.description;
+        this._detail = message.detail;
+    }
+
     toJson(){
         return {
             id: this._id,

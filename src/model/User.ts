@@ -39,6 +39,12 @@ export class User {
         this._messages.splice(index, 1);
     }
 
+    editMessage(message: Message){
+        const msg = this._messages.find(m => m.id === message.id) as Message;
+
+        msg.edit(message);
+    }
+
     toJson(){
         return{
             id: this._id,
