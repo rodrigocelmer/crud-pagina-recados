@@ -38,7 +38,12 @@ export class MessageController {
             })
         }
 
-        return response.json(allMessagesFound);
+        const resp = {
+            userId,
+            messages: allMessagesFound
+        }
+
+        return response.json(resp);
     }
 
     remove(request: Request, response: Response){
