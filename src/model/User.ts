@@ -45,6 +45,12 @@ export class User {
         msg.edit(message);
     }
 
+    changeMsgStatus(msgId: string, archieved: boolean){
+        const msg = this._messages.find(m => m.id === msgId) as Message;
+
+        msg.changeStatus(archieved);
+    }
+
     toJson(){
         return{
             id: this._id,

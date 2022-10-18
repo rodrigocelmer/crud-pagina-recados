@@ -45,4 +45,10 @@ export default (app: Express) => {
         new MessageMiddleware().validateBody,
         new MessageController().update
     )
+    app.post(
+        '/users/:userId/messages/:msgId/changeStatus',
+        new UserMiddleware().validateId,
+        new MessageMiddleware().validateId,
+        new MessageController().changeStatus
+    )
 }

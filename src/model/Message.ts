@@ -15,11 +15,17 @@ export class Message{
     public get detail() : string {
         return this._detail;
     }
+
+    private _archieved: boolean;
+    public get archieved() : boolean {
+        return this._archieved;
+    }
     
     constructor(description: string, detail: string){
         this._id = crypto.randomUUID();
         this._description = description;
-        this._detail = detail
+        this._detail = detail;
+        this._archieved = false;
     }
     
     static fill(message: Message): Message{
@@ -32,6 +38,10 @@ export class Message{
     edit(message: Message){
         this._description = message.description;
         this._detail = message.detail;
+    }
+
+    changeStatus(archieved: boolean){
+        this._archieved = archieved;
     }
 
     toJson(){

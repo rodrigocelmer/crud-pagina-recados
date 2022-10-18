@@ -70,4 +70,16 @@ export class MessageController {
 
         return response.json({msg: 'message edited'});
     }
+
+    changeStatus(request: Request, response: Response){        
+        const {userId, msgId} = request.params;
+        const {archieved} = request.body;
+        const usersDB = getUserSync();
+        const user = usersDB.find(u => u.id === userId) as User;
+
+        user.changeMsgStatus(msgId, archieved);
+        saveUserSync(usersDB);
+
+        return response.json({msg: 'changed message status'});
+    }
 }
