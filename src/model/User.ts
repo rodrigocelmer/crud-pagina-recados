@@ -67,7 +67,8 @@ export class User {
                     {
                         id: msg.id,
                         description: msg.description,
-                        detail: msg.detail
+                        detail: msg.detail,
+                        archieved: msg.archieved
                     }
                 )
             })

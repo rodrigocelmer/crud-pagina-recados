@@ -31,6 +31,7 @@ export class Message{
     static fill(message: Message): Message{
         const msg = new Message(message.description, message.detail);
         msg._id = message.id;
+        msg._archieved = message.archieved;
 
         return msg;
     }
