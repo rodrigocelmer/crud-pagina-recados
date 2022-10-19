@@ -26,9 +26,6 @@ export class MessageController {
             return message.toJson();
         })
 
-        console.log(archieved);
-        
-
         if(description){
             allMessagesFound = allMessagesFound.filter(message => {
                 return message.description.toLowerCase().includes(description.toString().toLowerCase());
