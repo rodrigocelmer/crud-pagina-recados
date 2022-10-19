@@ -49,7 +49,8 @@ export class Message{
         return {
             id: this._id,
             description: this._description,
-            detail: this._detail
+            detail: this._detail,
+            archieved: this._archieved
         }
     }
 }

@@ -21,10 +21,13 @@ export class MessageController {
         const {userId} = request.params;
         const usersDB = getUserSync();
         const user = usersDB.find(u => u.id === userId) as User;
-        const {description, detail} = request.query;
+        const {description, archieved} = request.query;
         let allMessagesFound = user.messages.map(message => {
             return message.toJson();
         })
+
+        console.log(archieved);
+        
 
         if(description){
             allMessagesFound = allMessagesFound.filter(message => {
@@ -32,9 +35,9 @@ export class MessageController {
             })
         }
 
-        if(detail){
+        if(archieved === 'false' || !archieved){
             allMessagesFound = allMessagesFound.filter(message => {
-                return message.detail.toLowerCase().includes(detail.toString().toLowerCase());
+                return !message.archieved;
             })
         }
 
