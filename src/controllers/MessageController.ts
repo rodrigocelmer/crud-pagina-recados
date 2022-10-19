@@ -32,7 +32,7 @@ export class MessageController {
             })
         }
 
-        if(archieved === 'false' || !archieved){
+        if(archieved !== 'true'){
             allMessagesFound = allMessagesFound.filter(message => {
                 return !message.archieved;
             })
