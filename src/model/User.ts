@@ -12,14 +12,26 @@ export class User {
         return this._name;
     }
 
+    private _email: string;
+    public get email(): string {
+        return this._email;
+    }
+
+    private _password: string;
+    public get password(): string {
+        return this._password;
+    }
+
     private _messages: Message[];
     public get messages() : Message[] {
         return [...this._messages];
     }
         
-    constructor(name: string){
+    constructor(name: string, email: string, password: string){
         this._id = crypto.randomUUID();
         this._name = name;
+        this._email = email;
+        this._password = password;
         this._messages = [];
     }
 
