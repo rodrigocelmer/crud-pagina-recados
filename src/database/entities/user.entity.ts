@@ -5,8 +5,8 @@ export class UserEntity{
     @PrimaryColumn({type: 'uuid'})
     id!: string;
 
-    @Column()
-    username!: string;
+    @Column({name: 'username'})
+    name!: string;
 
     @Column()
     email!: string;

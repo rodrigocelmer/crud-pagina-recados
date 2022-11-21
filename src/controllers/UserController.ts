@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../model/User";
+import { UserRepository } from "../repositories/users.repository";
 import { getUserSync, saveUserSync } from "../util/UserFileSystem";
 
 export class UserController {
@@ -14,11 +15,11 @@ export class UserController {
         return response.json(user.toJson());
     }
 
-    getAll(request: Request, response: Response){
+    async getAll(request: Request, response: Response){
         const {name} = request.query;
-        const usersDB = getUserSync();
-        let allUsersFound = usersDB.map(user => {
-            return user.toJson();
+        const repository = new UserRepository();
+        let allUsersFound = (await repository.getAll()).map(user => {
+            return user;
         })
 
         if(name){
