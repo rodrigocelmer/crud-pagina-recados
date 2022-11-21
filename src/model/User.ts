@@ -12,31 +12,31 @@ export class User {
         return this._name;
     }
 
-    private _email: string;
-    public get email(): string {
-        return this._email;
-    }
-
     private _password: string;
     public get password(): string {
         return this._password;
     }
 
+    private _email: string;
+    public get email(): string {
+        return this._email;
+    }
+    
     private _messages: Message[];
     public get messages() : Message[] {
         return [...this._messages];
     }
         
-    constructor(name: string, email: string, password: string){
+    constructor(name: string, password: string, email: string){
         this._id = crypto.randomUUID();
         this._name = name;
-        this._email = email;
         this._password = password;
+        this._email = email;
         this._messages = [];
     }
 
-    static fill(id: string, name: string, messages: Message[]): User{
-        const user = new User(name);
+    static fill(id: string, name: string, password: string, email: string, messages: Message[]): User{
+        const user = new User(name, password, email);
         user._id = id;
         user._messages = messages.map(msg => Message.fill(msg))
 
