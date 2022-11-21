@@ -14,10 +14,16 @@ export class UserMiddleware {
     }
 
     validateBody(request: Request, response: Response, next: NextFunction){
-        const {name} = request.body;
+        const {name, password, email} = request.body;
 
         if(!name)
             return response.status(404).json({err: '\'name\' field not informed'});
+
+        if(!password)
+            return response.status(404).json({err: '\'password\' field not informed'});
+            
+        if(!email)
+            return response.status(404).json({err: '\'email\' field not informed'});
 
         return next();
     }
