@@ -4,13 +4,12 @@ import { UserRepository } from "../repositories/users.repository";
 import { getUserSync, saveUserSync } from "../util/UserFileSystem";
 
 export class UserController {
-    create(request: Request, response: Response){
+    async create(request: Request, response: Response){
         const {name, password, email} = request.body;
         const user = new User(name, password, email);
-        const usersDB = getUserSync();
+        const repository = new UserRepository();
 
-        usersDB.push(user);
-        saveUserSync(usersDB);
+        await repository.create(user);
 
         return response.json(user.toJson());
     }
