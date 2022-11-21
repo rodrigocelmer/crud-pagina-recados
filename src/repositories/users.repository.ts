@@ -21,4 +21,18 @@ export class UserRepository{
 
         return userEntity;
     }
+
+    async getById(userId: string): Promise<UserEntity>{
+        const manager = pgHelper.client.manager;
+        const userEntity = await manager.findOne(UserEntity, {
+            where: {id: userId}
+        }) as UserEntity;
+
+        return userEntity;
+    }
+
+    async remove(userId: string): Promise<void>{
+        const manager = pgHelper.client.manager;
+        await manager.delete(UserEntity, {id: userId})
+    }
 }

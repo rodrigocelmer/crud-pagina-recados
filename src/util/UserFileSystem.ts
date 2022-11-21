@@ -15,6 +15,8 @@ import fs from "fs";
          User.fill(
              user.id,
              user.name,
+             user.password,
+             user.email,
              user.messages
          )
      );

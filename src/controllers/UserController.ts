@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../model/User";
 import { UserRepository } from "../repositories/users.repository";
-import { getUserSync, saveUserSync } from "../util/UserFileSystem";
 
 export class UserController {
     async create(request: Request, response: Response){
@@ -30,13 +29,11 @@ export class UserController {
         return response.json(allUsersFound);
     }
 
-    remove(request: Request, response: Response){
+    async remove(request: Request, response: Response){
         const {userId} = request.params;
-        const usersDB = getUserSync();
-        const userIndex = usersDB.findIndex(u => u.id === userId);
+        const repository = new UserRepository();
 
-        usersDB.splice(userIndex, 1);
-        saveUserSync(usersDB);
+        await repository.remove(userId);
 
         return response.json({msg: 'user deleted'});
     }

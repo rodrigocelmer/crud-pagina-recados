@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { getUserSync, saveUserSync } from "../util/UserFileSystem";
+import { UserRepository } from "../repositories/users.repository";
 
 export class UserMiddleware {
-    validateId(request: Request, response: Response, next: NextFunction){
+    async validateId(request: Request, response: Response, next: NextFunction){
         const {userId} = request.params;
-        const usersDB = getUserSync();
-        const user = usersDB.find(u => u.id === userId);
+        const repository = new UserRepository();
+        const user = await repository.getById(userId);
 
         if(!user)
             return response.status(404).json({err: 'user not found'});
