@@ -5,8 +5,8 @@ import { getUserSync, saveUserSync } from "../util/UserFileSystem";
 
 export class UserController {
     create(request: Request, response: Response){
-        const {name} = request.body;
-        const user = new User(name);
+        const {name, password, email} = request.body;
+        const user = new User(name, password, email);
         const usersDB = getUserSync();
 
         usersDB.push(user);
