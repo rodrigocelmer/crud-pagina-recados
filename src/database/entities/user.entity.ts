@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { MessageEntity } from "./message.entity";
 
 @Entity({name: 'users'})
 export class UserEntity{
@@ -19,4 +20,7 @@ export class UserEntity{
 
     @Column({name: 'time_updated'})
     timeUpdated!: Date;
+
+    @OneToMany(() => MessageEntity, (message) => message.user)
+    message?: MessageEntity[];
 }
