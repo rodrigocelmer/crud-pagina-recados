@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import { Message } from "../model/Message";
-import { User } from "../model/User";
 import { MessageRepository } from "../repositories/message.repository";
-import { getUserSync, saveUserSync } from "../util/UserFileSystem";
 
 export class MessageController {
     async create(request: Request, response: Response){
