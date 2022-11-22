@@ -53,15 +53,13 @@ export class MessageController {
         return response.json({msg: 'message deleted'});
     }
 
-    update(request: Request, response: Response){
+    async update(request: Request, response: Response){
         const {userId, msgId} = request.params;
         const {description, detail} = request.body;
-        const usersDB = getUserSync();
-        const user = usersDB.find(u => u.id === userId) as User;
-        const m = {id: msgId, description, detail} as Message;
+        const toUpdate = Message.fill(msgId, description, detail);
+        const repository = new MessageRepository();
 
-        user.editMessage(m);
-        saveUserSync(usersDB);
+        await repository.update(userId, toUpdate);
 
         return response.json({msg: 'message edited'});
     }

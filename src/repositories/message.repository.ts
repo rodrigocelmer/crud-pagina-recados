@@ -39,4 +39,15 @@ export class MessageRepository{
 
         await manager.delete(MessageEntity, {id: msgId});
     }
+
+    async update(userId: string, message: Message): Promise<void>{
+        const manager = pgHelper.client.manager;
+        await manager.update(MessageEntity, {id: message.id},
+        {   
+            description: message.description,
+            detail: message.detail,
+            archieved: message.archieved,
+            userId
+        });
+    }
 }
