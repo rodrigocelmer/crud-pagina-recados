@@ -54,18 +54,17 @@ export class MessageController {
     }
 
     async update(request: Request, response: Response){
-        const {userId, msgId} = request.params;
+        const {msgId} = request.params;
         const {description, detail} = request.body;
-        const toUpdate = Message.fill(msgId, description, detail);
         const repository = new MessageRepository();
 
-        await repository.update(userId, toUpdate);
+        await repository.update(msgId, description, detail);
 
         return response.json({msg: 'message edited'});
     }
 
     async changeStatus(request: Request, response: Response){        
-        const {userId, msgId} = request.params;
+        const {msgId} = request.params;
         const {archieved} = request.body;
         const repository = new MessageRepository();
 
