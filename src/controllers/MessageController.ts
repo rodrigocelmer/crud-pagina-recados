@@ -64,14 +64,12 @@ export class MessageController {
         return response.json({msg: 'message edited'});
     }
 
-    changeStatus(request: Request, response: Response){        
+    async changeStatus(request: Request, response: Response){        
         const {userId, msgId} = request.params;
         const {archieved} = request.body;
-        const usersDB = getUserSync();
-        const user = usersDB.find(u => u.id === userId) as User;
+        const repository = new MessageRepository();
 
-        user.changeMsgStatus(msgId, archieved);
-        saveUserSync(usersDB);
+        await repository.changeStatus(msgId, archieved);
 
         return response.json({msg: 'changed message status'});
     }

@@ -50,4 +50,12 @@ export class MessageRepository{
             userId
         });
     }
+
+    async changeStatus(msgId: string, newStatus: boolean): Promise<void>{
+        const manager = pgHelper.client.manager;
+        await manager.update(MessageEntity, {id: msgId},
+        {   
+            archieved: newStatus
+        });
+    }
 }
