@@ -28,10 +28,10 @@ export class Message{
         this._archieved = false;
     }
     
-    static fill(message: Message): Message{
-        const msg = new Message(message.description, message.detail);
-        msg._id = message.id;
-        msg._archieved = message.archieved;
+    static fill(id: string, description: string, detail: string, archieved: boolean): Message{
+        const msg = new Message(description, detail);
+        msg._id = id;
+        msg._archieved = archieved;
 
         return msg;
     }

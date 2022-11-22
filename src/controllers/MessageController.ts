@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Message } from "../model/Message";
 import { User } from "../model/User";
+import { MessageRepository } from "../repositories/message.repository";
 import { getUserSync, saveUserSync } from "../util/UserFileSystem";
 
 export class MessageController {
@@ -17,13 +18,12 @@ export class MessageController {
         return response.json(msg.toJson());
     }
 
-    getAll(request: Request, response: Response){
+    async getAll(request: Request, response: Response){
         const {userId} = request.params;
-        const usersDB = getUserSync();
-        const user = usersDB.find(u => u.id === userId) as User;
         const {description, archieved} = request.query;
-        let allMessagesFound = user.messages.map(message => {
-            return message.toJson();
+        const repository = new MessageRepository();
+        let allMessagesFound = (await repository.getAll(userId)).map(message => {
+            return message;
         })
 
         if(description){
