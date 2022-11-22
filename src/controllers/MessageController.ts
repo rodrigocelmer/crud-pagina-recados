@@ -5,15 +5,13 @@ import { MessageRepository } from "../repositories/message.repository";
 import { getUserSync, saveUserSync } from "../util/UserFileSystem";
 
 export class MessageController {
-    create(request: Request, response: Response){
+    async create(request: Request, response: Response){
         const {userId} = request.params;
-        const usersDB = getUserSync();
-        const user = usersDB.find(u => u.id === userId) as User;
         const {description, detail} = request.body;
         const msg = new Message(description, detail);
+        const repository = new MessageRepository();
 
-        user.addMessage(msg);
-        saveUserSync(usersDB);
+        await repository.create(userId, msg);
 
         return response.json(msg.toJson());
     }
