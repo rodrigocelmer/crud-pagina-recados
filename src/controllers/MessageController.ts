@@ -44,14 +44,11 @@ export class MessageController {
         return response.json(resp);
     }
 
-    remove(request: Request, response: Response){
-        const {userId, msgId} = request.params;
-        const usersDB = getUserSync();
-        const user = usersDB.find(u => u.id === userId) as User;
-        const userMsgIndex = user.messages.findIndex(m => m.id === msgId);
+    async remove(request: Request, response: Response){
+        const {msgId} = request.params;
+        const repository = new MessageRepository();
 
-        user.deleteMessage(userMsgIndex);
-        saveUserSync(usersDB);
+        await repository.remove(msgId);
 
         return response.json({msg: 'message deleted'});
     }

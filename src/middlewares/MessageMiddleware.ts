@@ -1,13 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { User } from "../model/User";
-import { getUserSync } from "../util/UserFileSystem";
+import { MessageRepository } from "../repositories/message.repository";
 
 export class MessageMiddleware {
-    validateId(request: Request, response: Response, next: NextFunction){
-        const {userId, msgId} = request.params;
-        const usersDB = getUserSync();
-        const user = usersDB.find(u => u.id === userId) as User;
-        const userMsg = user.messages.find(m => m.id === msgId);
+    async validateId(request: Request, response: Response, next: NextFunction){
+        const {msgId} = request.params;
+        const repository = new MessageRepository();
+        const userMsg = await repository.getById(msgId);
 
         if(!userMsg)
             return response.status(404).json({err: 'message not found'});
