@@ -38,7 +38,7 @@ export class User {
     static fill(id: string, name: string, password: string, email: string, messages: Message[]): User{
         const user = new User(name, password, email);
         user._id = id;
-        user._messages = messages.map(msg => Message.fill(msg))
+        user._messages = messages.map(msg => Message.fill(msg.id, msg.description, msg.detail, msg.archieved))
 
         return user;
     }
