@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { UserEntity } from "./user.entity";
 
 @Entity({name: 'messages'})
@@ -18,7 +18,7 @@ export class MessageEntity{
     @Column({name: 'time_created'})
     timeCreated!: Date;
 
-    @Column({name: 'time_updated'})
+    @UpdateDateColumn({name: 'time_updated'})
     timeUpdated!: Date;
 
     @Column({name: 'id_user'})
