@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { redisHelper } from "../database/redis-helper";
 import { Message } from "../model/Message";
 import { MessageRepository } from "../repositories/message.repository";
 
@@ -21,6 +22,8 @@ export class MessageController {
         let allMessagesFound = (await repository.getAll(userId)).map(message => {
             return message;
         })
+
+        await redisHelper.client.set(`messages:${userId}`, JSON.stringify(allMessagesFound));
 
         if(description){
             allMessagesFound = allMessagesFound.filter(message => {
