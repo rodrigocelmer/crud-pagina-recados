@@ -4,6 +4,12 @@ import { redisHelper } from "../database/redis-helper";
 import { Message } from "../model/Message";
 import { MessageRepository } from "../repositories/message.repository";
 
+async function clearCache(userId: string, msgId: string | undefined){
+    await redisHelper.client.del(`messages:${userId}`);
+    if(msgId){
+        await redisHelper.client.del(`users:${userId}:messages:${msgId}`)
+    }
+}
 export class MessageController {
     async create(request: Request, response: Response){
         const {userId} = request.params;
@@ -19,7 +25,7 @@ export class MessageController {
             JSON.stringify(msg)
         );
 
-        await redisHelper.client.del(`messages:${userId}`);
+        await clearCache(userId, undefined);
 
         return response.json(msg.toJson());
     }
@@ -67,30 +73,33 @@ export class MessageController {
     }
 
     async remove(request: Request, response: Response){
-        const {msgId} = request.params;
+        const {userId, msgId} = request.params;
         const repository = new MessageRepository();
 
         await repository.remove(msgId);
+        await clearCache(userId, msgId);
 
         return response.json({msg: 'message deleted'});
     }
 
     async update(request: Request, response: Response){
-        const {msgId} = request.params;
+        const {userId, msgId} = request.params;
         const {description, detail} = request.body;
         const repository = new MessageRepository();
 
         await repository.update(msgId, description, detail);
+        await clearCache(userId, msgId);
 
         return response.json({msg: 'message edited'});
     }
 
     async changeStatus(request: Request, response: Response){        
-        const {msgId} = request.params;
+        const {userId, msgId} = request.params;
         const {archieved} = request.body;
         const repository = new MessageRepository();
 
         await repository.changeStatus(msgId, archieved);
+        await clearCache(userId, msgId);
 
         return response.json({msg: 'changed message status'});
     }
