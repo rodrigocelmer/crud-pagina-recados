@@ -13,6 +13,14 @@ export class MessageController {
 
         await repository.create(userId, msg);
 
+        await redisHelper.client.setex(
+            `users:${userId}:messages:${msg.id}`,
+            (60*60),
+            JSON.stringify(msg)
+        );
+
+        await redisHelper.client.del(`messages:${userId}`);
+
         return response.json(msg.toJson());
     }
 
