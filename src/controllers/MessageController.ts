@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { MessageEntity } from "../database/entities/message.entity";
 import { redisHelper } from "../database/redis-helper";
 import { Message } from "../model/Message";
 import { MessageRepository } from "../repositories/message.repository";
@@ -18,10 +19,18 @@ export class MessageController {
     async getAll(request: Request, response: Response){
         const {userId} = request.params;
         const {description, archieved} = request.query;
-        const repository = new MessageRepository();
-        let allMessagesFound = (await repository.getAll(userId)).map(message => {
-            return message;
-        })
+        const cache = await redisHelper.client.get(`messages:${userId}`);
+        let allMessagesFound: MessageEntity[];
+
+        if(cache){
+            allMessagesFound = JSON.parse(cache);
+        }
+        else{
+            const repository = new MessageRepository();
+            allMessagesFound = (await repository.getAll(userId)).map(message => {
+                return message;
+            })
+        }
 
         await redisHelper.client.set(`messages:${userId}`, JSON.stringify(allMessagesFound));
 
