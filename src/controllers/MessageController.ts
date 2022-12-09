@@ -40,7 +40,11 @@ export class MessageController {
             })
         }
 
-        await redisHelper.client.set(`messages:${userId}`, JSON.stringify(allMessagesFound));
+        await redisHelper.client.setex(
+            `messages:${userId}`,
+            (60*60),
+            JSON.stringify(allMessagesFound)
+        );
 
         if(description){
             allMessagesFound = allMessagesFound.filter(message => {
