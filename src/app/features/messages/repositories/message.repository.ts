@@ -1,6 +1,6 @@
-import { MessageEntity } from "../database/entities/message.entity";
-import { pgHelper } from "../database/pg-helper";
-import { Message } from "../model/Message";
+import { MessageEntity } from "../../../shared/database/entities/message.entity";
+import { pgHelper } from "../../../shared/database/pg-helper";
+import { Message } from "../../../models/message";
 
 export class MessageRepository{
     async create(userId: string, message: Message): Promise<void>{

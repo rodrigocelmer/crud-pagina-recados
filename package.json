@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "dev:debug": "ts-node-dev --inspect --respawn --transpile-only src/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/main/server.ts",
+    "dev:debug": "ts-node-dev --inspect --respawn --transpile-only src/main/server.ts",
     "build": "npx tsc",
-    "start": "cross-env NODE_ENV=production node ./dist/index.js"
+    "start": "cross-env NODE_ENV=production node dist/main/index.js"
   },
   "keywords": [],
   "author": "",

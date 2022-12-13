@@ -1,6 +1,6 @@
-import { UserEntity } from "../database/entities/user.entity";
-import { pgHelper } from "../database/pg-helper";
-import { User } from "../model/User";
+import { UserEntity } from "../../../shared/database/entities/user.entity";
+import { pgHelper } from "../../../shared/database/pg-helper";
+import { User } from "../../../models/user";
 
 export class UserRepository{
     async create(user: User): Promise<void>{

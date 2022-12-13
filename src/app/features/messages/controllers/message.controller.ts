@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { MessageEntity } from "../database/entities/message.entity";
-import { redisHelper } from "../database/redis-helper";
-import { Message } from "../model/Message";
+import { MessageEntity } from "../../../shared/database/entities/message.entity";
+import { redisHelper } from "../../../shared/database/redis-helper";
+import { Message } from "../../../models/message";
 import { MessageRepository } from "../repositories/message.repository";
 
 async function clearCache(userId: string, msgId: string | undefined){

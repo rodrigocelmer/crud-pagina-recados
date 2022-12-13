@@ -12,6 +12,6 @@ const config: DataSourceOptions = {
     ssl: {
         rejectUnauthorized: false,
     },
-    entities: [rootDir + '/database/entities/*']
+    entities: [rootDir + '/app/shared/database/entities/*']
 };
 export default config;

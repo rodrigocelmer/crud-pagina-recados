@@ -1,4 +1,4 @@
-import { User } from "../model/User";
+import { User } from "../../models/user";
 import fs from "fs";
 
  const dbPath = 'db.json';

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { UserRepository } from "../repositories/users.repository";
+import { UserRepository } from "../repositories/user.repository";
 
-export class UserMiddleware {
+export class UserValidator {
     async validateId(request: Request, response: Response, next: NextFunction){
         const {userId} = request.params;
         const repository = new UserRepository();

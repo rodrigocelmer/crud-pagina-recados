@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { MessageRepository } from "../repositories/message.repository";
 
-export class MessageMiddleware {
+export class MessageValidator {
     async validateId(request: Request, response: Response, next: NextFunction){
         const {msgId} = request.params;
         const repository = new MessageRepository();
