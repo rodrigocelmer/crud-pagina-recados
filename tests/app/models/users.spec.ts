@@ -18,4 +18,17 @@ describe("Tests User model", () => {
         expect(sut.toJson()).toHaveProperty("name", sut.name);
         expect(sut.toJson()).toHaveProperty("email", sut.email);
     });
+
+    test("Tests fill()", () => {
+        const sut1 = new User("John Doe", "john1234", "johndoe@johndoe.com");
+        const sut2 = User.fill(
+            sut1.id,
+            sut1.name,
+            sut1.password,
+            sut1.email,
+            sut1.messages
+        );
+
+        expect(sut2).toEqual(sut1);
+    })
 })
