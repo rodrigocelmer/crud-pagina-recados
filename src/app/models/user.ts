@@ -70,21 +70,4 @@ export class User {
             email: this._email
         }
     }
-
-    toFileSystem(){
-        return{
-            id: this._id,
-            name: this._name,
-            messages: this._messages.map(msg => {
-                return(
-                    {
-                        id: msg.id,
-                        description: msg.description,
-                        detail: msg.detail,
-                        archieved: msg.archieved
-                    }
-                )
-            })
-        }
-    }
 }
