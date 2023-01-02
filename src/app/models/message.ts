@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-export class Message{
+export default class Message{
     private _id: string;
     public get id() : string {
         return this._id;
