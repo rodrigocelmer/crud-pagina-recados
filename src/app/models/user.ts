@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { Message } from './message';
 
-export default class User {
+export class User {
     private _id: string;
     public get id() : string {
         return this._id;
