@@ -3,7 +3,7 @@ import { GetAllUsers } from "../../../../../src/app/features/users/usecases/get-
 import { User } from "../../../../../src/app/models/user";
 
 describe("Tests get all users", () => {
-    test.skip("Tests if all users are returned", async () => {
+    test("Tests if all users are returned", async () => {
         const sut = new GetAllUsers(new UserRepository());
         jest
             .spyOn(UserRepository.prototype, "getAll")
