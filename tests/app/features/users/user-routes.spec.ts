@@ -92,4 +92,40 @@ describe("Tests all users routes. Users routes do not use Redis", () => {
             expect(userEntityDeleted).toBeFalsy();
         }
     })
+
+    test("Tests invalid body structure when creating an user - no name informed", async () => {
+        const response = await supertest(app)
+            .post("/users")
+            .send({ 
+                password: "john1234", 
+                email: "johndoe@johndoe.com"
+            });
+
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual({ err: "'name' field not informed" });
+    })
+    
+    test("Tests invalid body structure when creating an user - no password informed", async () => {
+        const response = await supertest(app)
+            .post("/users")
+            .send({ 
+                name: "John Doe", 
+                email: "johndoe@johndoe.com"
+            });
+
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual({ err: "'password' field not informed" });
+    })
+
+    test("Tests invalid body structure when creating an user - no email informed", async () => {
+        const response = await supertest(app)
+            .post("/users")
+            .send({ 
+                name: "John Doe", 
+                password: "john1234"
+            });
+
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual({ err: "'email' field not informed" });
+    })
 })
