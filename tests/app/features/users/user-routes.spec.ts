@@ -1,8 +1,6 @@
-import { dataSource } from "../../../../src/main/database/typeorm";
-import { User } from "../../../../src/app/models/user";
 import app from "../../../../src/main/config/app";
+import crypto from "crypto";
 import supertest from "supertest";
-import { UserRepository } from "../../../../src/app/features/users/repositories/user.repository";
 import { pgHelper } from "../../../../src/app/shared/database/pg-helper";
 import { UserEntity } from "../../../../src/app/shared/database/entities/user.entity";
 
@@ -41,5 +39,24 @@ describe("Tests all users routes. Users routes do not use Redis", () => {
         
         expect(response.status).toBe(200);
         expect(userEntity).toBeTruthy();
+    })
+
+    test("Tests if all users get returned", async () => {
+        const userEntity = pgHelper.client.manager.create(UserEntity, {
+            id: crypto.randomUUID(),
+            name: "John Doe", 
+            password: "john1234", 
+            email: "johndoe@johndoe.com"
+        });
+
+        userId = userEntity.id;
+
+        await pgHelper.client.manager.save(userEntity);
+
+        const response = await supertest(app).get(
+            `/users`
+        );
+
+        expect(response.status).toBe(200);
     })
 })
