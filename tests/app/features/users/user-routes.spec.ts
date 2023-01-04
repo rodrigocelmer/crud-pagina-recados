@@ -59,4 +59,37 @@ describe("Tests all users routes. Users routes do not use Redis", () => {
 
         expect(response.status).toBe(200);
     })
+
+    test("Tests if user is removed successfully", async () => {
+        const response = await supertest(app)
+        .post("/users")
+        .send({
+            name: "John Doe", 
+            password: "john1234", 
+            email: "johndoe@johndoe.com"
+        });
+
+        userId = response.body.id;
+
+        const userEntity = await pgHelper.client.manager.findOne(
+            UserEntity,
+            {
+                where: {id: userId}
+            }
+        )        
+        
+        if(userEntity){
+            const responseDelete = await supertest(app)
+                .delete(`/users/${userId}`)
+            const userEntityDeleted = await pgHelper.client.manager.findOne(
+                UserEntity,
+                {
+                    where: {id: userId}
+                }
+            )
+
+            expect(responseDelete.status).toBe(200);
+            expect(userEntityDeleted).toBeFalsy();
+        }
+    })
 })
