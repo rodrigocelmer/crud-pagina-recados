@@ -1,6 +1,5 @@
 import { UserRepository } from "../repositories/user.repository";
 import { User } from "../../../models/user";
-import { Message } from "../../../models/message";
 
 interface RequestData {
     name: string;
