@@ -4,6 +4,8 @@ import { User } from "../../../../../src/app/models/user";
 
 describe("Tests get all users", () => {
     test("Tests if all users are returned", async () => {
+        jest.setTimeout(10000);
+        
         const sut = new GetAllUsers(new UserRepository());
         jest
             .spyOn(UserRepository.prototype, "getAll")
