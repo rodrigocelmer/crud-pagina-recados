@@ -88,6 +88,37 @@ describe("Tests all messages routes. Message routes use Redis", () => {
             .delete(`/users/${userId}/messages/${msgId}`)
     })
 
+    test("Tests if filtered messages are returned",async () => {
+        jest.setTimeout(10000);
+        
+        const user = await supertest(app)
+            .post("/users")
+            .send({
+                name: "John Doe", 
+                password: "john1234", 
+                email: "johndoe@johndoe.com"
+            });
+
+        userId = user.body.id;
+
+        const msgResp = await supertest(app)
+            .post(`/users/${userId}/messages`)
+            .send({
+                description: "test description",
+                detail: "test detail"
+            })
+
+        const response = await supertest(app)
+            .get(`/users/${userId}/messages?description=test description`)
+
+        msgId = msgResp.body.id;
+
+        expect(response.status).toBe(200);
+
+        await supertest(app)
+            .delete(`/users/${userId}/messages/${msgId}`)
+    })
+
     test("Tests if message is deleted",async () => {
         jest.setTimeout(20000);
         
