@@ -25,20 +25,13 @@ export class MessageRepository{
         return messageEntity;
     }
 
-    async getById(msgId: string): Promise<Message>{
+    async getById(msgId: string): Promise<MessageEntity>{
         const manager = pgHelper.client.manager;
         const messageEntity = await manager.findOne(MessageEntity, {
             where: {id: msgId}
         }) as MessageEntity;
 
-        const message = Message.fill(
-            messageEntity.id,
-            messageEntity.description,
-            messageEntity.detail,
-            messageEntity.archieved
-        )
-
-        return message;
+        return messageEntity;
     }
 
     async remove(msgId: string): Promise<void>{
