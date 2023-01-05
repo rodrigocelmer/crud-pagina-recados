@@ -88,7 +88,7 @@ describe("Tests all messages routes. Message routes use Redis", () => {
             .delete(`/users/${userId}/messages/${msgId}`)
     })
 
-    test("Tests if all messages are returned",async () => {
+    test("Tests if message is deleted",async () => {
         jest.setTimeout(20000);
         
         const user = await supertest(app)
