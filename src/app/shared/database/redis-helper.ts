@@ -5,5 +5,9 @@ export const redisHelper = {
     client: null as unknown as Redis,
     connect() {
         this.client = new Redis(process.env.REDIS_URL as string);
-    }
+    },
+    disconnect() {
+      this.client.disconnect();
+      this.client = null as unknown as Redis;
+    },
 }
