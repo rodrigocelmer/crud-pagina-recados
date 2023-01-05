@@ -83,9 +83,6 @@ describe("Tests all messages routes. Message routes use Redis", () => {
         msgId = msgResp.body.id;
 
         expect(response.status).toBe(200);
-
-        await supertest(app)
-            .delete(`/users/${userId}/messages/${msgId}`)
     })
 
     test("Tests if filtered messages are returned",async () => {
@@ -114,9 +111,6 @@ describe("Tests all messages routes. Message routes use Redis", () => {
         msgId = msgResp.body.id;
 
         expect(response.status).toBe(200);
-
-        await supertest(app)
-            .delete(`/users/${userId}/messages/${msgId}`)
     })
 
     test("Tests if message is deleted",async () => {
