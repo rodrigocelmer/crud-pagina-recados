@@ -344,5 +344,9 @@ describe("Tests all messages routes. Message routes use Redis", () => {
             .get(`/users/${userId}/messages`)
 
         expect(response.status).toBe(200);
+
+        const response2 = await cacheRepository.delete(`users:${userId}:messages:${msgId}`)
+
+        expect(response2).toBe(1);
     })
 })
