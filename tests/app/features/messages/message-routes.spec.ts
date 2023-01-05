@@ -18,6 +18,8 @@ describe("Tests all messages routes. Message routes use Redis", () => {
     })
     
     afterAll(async () => {
+        const cacheRepository = new CacheRepository;
+        cacheRepository.flush();
         await pgHelper.disconnect();
         redisHelper.disconnect();
         RedisConnection.destroy();
@@ -311,7 +313,7 @@ describe("Tests all messages routes. Message routes use Redis", () => {
         expect(response.body).toEqual({ err: "'detail' field not informed" });
     })
 
-    test("testar o cache", async () => {
+    test("Tests cache", async () => {
         jest.setTimeout(20000);
 
         const cacheRepository = new CacheRepository;        
