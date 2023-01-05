@@ -87,4 +87,49 @@ describe("Tests all messages routes. Message routes use Redis", () => {
         await supertest(app)
             .delete(`/users/${userId}/messages/${msgId}`)
     })
+
+    test("Tests if all messages are returned",async () => {
+        jest.setTimeout(20000);
+        
+        const user = await supertest(app)
+            .post("/users")
+            .send({
+                name: "John Doe", 
+                password: "john1234", 
+                email: "johndoe@johndoe.com"
+            });
+
+        userId = user.body.id;
+
+        const msgResp = await supertest(app)
+            .post(`/users/${userId}/messages`)
+            .send({
+                description: "test description",
+                detail: "test detail"
+            })
+
+        msgId = msgResp.body.id;
+
+        const messageEntity = await pgHelper.client.manager.findOne(
+            MessageEntity,
+            {
+                where: {id: msgId}
+            }
+        )
+
+        if(messageEntity){
+            const response = await supertest(app)
+                .delete(`/users/${userId}/messages/${msgId}`)
+            
+            const msgEntityDeleted = await pgHelper.client.manager.findOne(
+                MessageEntity,
+                {
+                    where: {id: msgId}
+                }
+            )
+
+            expect(response.status).toBe(200);
+            expect(msgEntityDeleted).toBeFalsy();
+        }
+    })
 })
