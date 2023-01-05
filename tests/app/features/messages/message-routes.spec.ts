@@ -169,4 +169,39 @@ describe("Tests all messages routes. Message routes use Redis", () => {
         expect(msgEdited.body.messages[0].description).toBe("new test description");
         expect(msgEdited.body.messages[0].detail).toBe("new test detail");
     })
+
+    test.skip("Tests if message status has changed successfully", async () => {
+        jest.setTimeout(10000);
+        
+        const user = await supertest(app)
+            .post("/users")
+            .send({
+                name: "John Doe", 
+                password: "john1234", 
+                email: "johndoe@johndoe.com"
+            });
+
+        userId = user.body.id;
+
+        const msg = await supertest(app)
+            .post(`/users/${userId}/messages`)
+            .send({
+                description: "test description",
+                detail: "test detail"
+            })
+            
+        msgId = msg.body.id;
+
+        const msgSut = await supertest(app)
+            .post(`/users/${userId}/messages/${msgId}/changeStatus`)
+            .send({
+                archieved: true
+            })
+
+        const msgEdited = await supertest(app)
+            .get(`/users/${userId}/messages`)
+
+        expect(msgSut.status).toBe(200);
+        expect(msgEdited.body.messages[0].archieved).toBeTruthy();
+    })
 })
