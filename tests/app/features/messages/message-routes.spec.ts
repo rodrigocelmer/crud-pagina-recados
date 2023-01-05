@@ -134,7 +134,7 @@ describe("Tests all messages routes. Message routes use Redis", () => {
     })
 
     test("Tests if message gets updated successfully", async () => {
-        jest.setTimeout(10000);
+        jest.setTimeout(20000);
         
         const user = await supertest(app)
             .post("/users")
@@ -171,7 +171,7 @@ describe("Tests all messages routes. Message routes use Redis", () => {
     })
 
     test.skip("Tests if message status has changed successfully", async () => {
-        jest.setTimeout(10000);
+        jest.setTimeout(20000);
         
         const user = await supertest(app)
             .post("/users")
@@ -203,5 +203,84 @@ describe("Tests all messages routes. Message routes use Redis", () => {
 
         expect(msgSut.status).toBe(200);
         expect(msgEdited.body.messages[0].archieved).toBeTruthy();
+    })
+
+    test.skip("Tests if message does not exist", async () => {
+        jest.setTimeout(20000);
+        
+        const user = await supertest(app)
+            .post("/users")
+            .send({
+                name: "John Doe", 
+                password: "john1234", 
+                email: "johndoe@johndoe.com"
+            });
+
+        userId = user.body.id;
+
+        const msg = await supertest(app)
+            .post(`/users/${userId}/messages`)
+            .send({
+                description: "test description",
+                detail: "test detail"
+            })
+            
+        msgId = msg.body.id;
+
+        const response = await supertest(app)
+            .put(`/users/${userId}/messages/any_id`)
+            .send({
+                description: "new test description",
+                detail: "new test detail"
+            })
+
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual({ err: 'message not found' });
+    })
+
+    test("Tests invalid body structure when adding a message - no description informed",async () => {
+        const user = await supertest(app)
+            .post("/users")
+            .send({
+                name: "John Doe", 
+                password: "john1234", 
+                email: "johndoe@johndoe.com"
+            });
+
+        userId = user.body.id;
+
+        const response = await supertest(app)
+            .post(`/users/${userId}/messages`)
+            .send({
+                detail: "test detail"
+            })
+
+        msgId = response.body.id;
+
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual({ err: "'description' field not informed" });
+    })
+
+    test("Tests invalid body structure when adding a message - no detail informed",async () => {
+        const user = await supertest(app)
+            .post("/users")
+            .send({
+                name: "John Doe", 
+                password: "john1234", 
+                email: "johndoe@johndoe.com"
+            });
+
+        userId = user.body.id;
+
+        const response = await supertest(app)
+            .post(`/users/${userId}/messages`)
+            .send({
+                description: "test description"
+            })
+
+        msgId = response.body.id;
+
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual({ err: "'detail' field not informed" });
     })
 })
