@@ -5,7 +5,6 @@ import { pgHelper } from "../../../../src/app/shared/database/pg-helper";
 import { redisHelper } from "../../../../src/app/shared/database/redis-helper";
 import app from "../../../../src/main/config/app";
 import { CacheRepository } from "../../../../src/app/shared/database/cache-repositories/cache.repositoy";
-import { RedisConnection } from "../../../../src/main/database/redis-connection";
 
 let userId: string;
 let msgId: string;
@@ -13,14 +12,14 @@ let msgId: string;
 describe("Tests all messages routes. Message routes use Redis", () => {
     beforeAll(async () => {
         await pgHelper.connect();
-        // redisHelper.connect();
-        RedisConnection.connect();
+        redisHelper.connect();
+        // RedisConnection.connect();
     })
     
     afterAll(async () => {
         await pgHelper.disconnect();
-        // redisHelper.disconnect();
-        RedisConnection.destroy();
+        redisHelper.disconnect();
+        // RedisConnection.destroy();
     });
 
     afterEach(async () => {
@@ -311,39 +310,39 @@ describe("Tests all messages routes. Message routes use Redis", () => {
         expect(response.body).toEqual({ err: "'detail' field not informed" });
     })
 
-    test.skip("testar o cache", async () => {
-        jest.setTimeout(20000);
+    // test.skip("testar o cache", async () => {
+    //     jest.setTimeout(20000);
 
-        const cacheRepository = new CacheRepository;        
-        const user = await supertest(app)
-            .post("/users")
-            .send({
-                name: "John Doe", 
-                password: "john1234", 
-                email: "johndoe@johndoe.com"
-            });
+    //     const cacheRepository = new CacheRepository;        
+    //     const user = await supertest(app)
+    //         .post("/users")
+    //         .send({
+    //             name: "John Doe", 
+    //             password: "john1234", 
+    //             email: "johndoe@johndoe.com"
+    //         });
 
-        userId = user.body.id;
+    //     userId = user.body.id;
 
-        const msgResp = await supertest(app)
-            .post(`/users/${userId}/messages`)
-            .send({
-                description: "test description",
-                detail: "test detail"
-            })
+    //     const msgResp = await supertest(app)
+    //         .post(`/users/${userId}/messages`)
+    //         .send({
+    //             description: "test description",
+    //             detail: "test detail"
+    //         })
 
-        msgId = msgResp.body.id;
+    //     msgId = msgResp.body.id;
 
-        console.log(msgResp.body);
+    //     console.log(msgResp.body);
         
-        await cacheRepository.set(
-            `users:${userId}:messages:${msgId}`, [msgResp.body]
-        )
+    //     await cacheRepository.set(
+    //         `users:${userId}:messages:${msgId}`, [msgResp.body]
+    //     )
 
-        const response = await supertest(app)
-            .get(`/users/${userId}/messages`)
+    //     const response = await supertest(app)
+    //         .get(`/users/${userId}/messages`)
 
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveLength(1);
-      })
+    //     expect(response.status).toBe(200);
+    //     expect(response.body).toHaveLength(1);
+    // })
 })
