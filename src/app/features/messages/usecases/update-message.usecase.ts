@@ -17,10 +17,6 @@ export class UpdateMessage {
     async execute(data: RequestData){
         const message = await this._messageRepository.getById(data.id);
 
-        if(!message) {
-            throw new Error("Message not found");
-        }
-
         await this._messageRepository.update(data.id, data.description, data.detail);
 
         return Message.fill(
