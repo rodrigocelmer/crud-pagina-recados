@@ -1,3 +1,4 @@
+import { Message } from "../../../src/app/models/message";
 import { User } from "../../../src/app/models/user";
 
 describe("Tests User model", () => {
@@ -30,5 +31,52 @@ describe("Tests User model", () => {
         );
 
         expect(sut2).toEqual(sut1);
+    })
+
+    test("Tests addMessage()", () => {
+        const sut = new User("John Doe", "john1234", "johndoe@johndoe.com");
+
+        sut.addMessage(new Message("description", "detail"));
+        
+        expect(sut.messages).toHaveLength(1);
+        expect(sut.messages[0]).toBeInstanceOf(Message);
+    })
+
+    test("Tests deleteMessage()", () => {
+        const sut = new User("John Doe", "john1234", "johndoe@johndoe.com");
+        const msg = new Message("description", "detail")
+
+        sut.addMessage(msg);
+
+        sut.deleteMessage(0);
+        
+        expect(sut.messages).toHaveLength(0);
+    })
+
+    test("Tests editMessage()", () => {
+        const sut = new User("John Doe", "john1234", "johndoe@johndoe.com");
+        const msg1 = new Message("description", "detail")
+
+        sut.addMessage(msg1);
+
+        const msg2 = Message.fill(msg1.id, "new description", "new detail", msg1.archieved);
+
+        sut.editMessage(msg2);
+
+        expect(sut.messages).toHaveLength(1);
+        expect(sut.messages[0]).toBeInstanceOf(Message);
+        expect(sut.messages[0].description).toBe("new description");
+        expect(sut.messages[0].detail).toBe("new detail");
+    })
+
+    test("Tests changeMsgStatus()", () => {
+        const sut = new User("John Doe", "john1234", "johndoe@johndoe.com");
+        const msg1 = new Message("description", "detail")
+
+        sut.addMessage(msg1);
+
+        sut.changeMsgStatus(msg1.id, false);
+
+        expect(sut.messages[0].archieved).toBeFalsy();
     })
 })
