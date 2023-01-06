@@ -20,7 +20,7 @@ const makeRequestDataUsr = () => {
 }
 
 describe("Test update message use case", () => {
-    test.skip("Test if message was update successfully", async () => {
+    test("Test if message was update successfully", async () => {
         const usrRepository = new UserRepository();
         const msgRepository = new MessageRepository();
         const usr = new CreateUser(usrRepository);

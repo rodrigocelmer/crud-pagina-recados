@@ -21,7 +21,7 @@ const makeRequestDataUsr = () => {
 }
 
 describe("Tests get all messages of an user", () => {
-    test.skip("Tests if all messages of an user are returned", async () => {
+    test("Tests if all messages of an user are returned", async () => {
         jest.setTimeout(10000);
 
         const usrRepository = new UserRepository();

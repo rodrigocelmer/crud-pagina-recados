@@ -199,7 +199,7 @@ describe("Tests all messages routes. Message routes use Redis", () => {
         expect(msgEdited.body.messages[0].detail).toBe("new test detail");
     })
 
-    test.skip("Tests if message status has changed successfully", async () => {
+    test("Tests if message status has changed successfully", async () => {
         jest.setTimeout(20000);
         
         const user = await supertest(app)
@@ -234,7 +234,7 @@ describe("Tests all messages routes. Message routes use Redis", () => {
         expect(msgEdited.body.messages[0].archieved).toBeTruthy();
     })
 
-    test.skip("Tests if message does not exist", async () => {
+    test("Tests if message does not exist", async () => {
         jest.setTimeout(20000);
         
         const user = await supertest(app)
